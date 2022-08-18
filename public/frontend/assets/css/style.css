@@ -1,0 +1,20 @@
+.a-topbar{
+    color: #fff;
+}
+.a-topbar:hover{
+    color: #ddd;
+}
+.block-atendimento{
+    background-color: #DB241E;
+    color: #fff;font-size: 100%;
+}
+.whatsapp-footer {
+    width: 64px;
+    display: block;
+    position: fixed;
+    bottom: 40px;
+    left: 20px;
+    text-align: center;
+    padding-top: 10px;
+    z-index: 999;
+}

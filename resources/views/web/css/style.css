@@ -1,0 +1,10 @@
+.a-topbar{
+    color: #fff;
+}
+.a-topbar:hover{
+    color: #ddd;
+}
+.block-atendimento{
+    background-color: #DB241E;
+    color: #fff;font-size: 100%;
+}
