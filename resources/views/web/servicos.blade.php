@@ -28,7 +28,7 @@
                         <div class="col-md-4 col-sm-6 col-lg-4">
                             <div class="service-inner">
                                 <a href="{{route('web.pagina', $servico->slug)}}">
-                                    <img src="{{$servico->cover()}}" alt="{{$servico->titulo}}" style="background-size: cover; background-position: center center;">
+                                    <img style="max-height: 257px !important;" src="{{$servico->cover()}}" alt="{{$servico->titulo}}" style="background-size: cover; background-position: center center;">
                                 </a>
                                 <div class="service-details">
                                     <h2><a href="{{route('web.pagina', $servico->slug)}}">{{$servico->titulo}}</a></h2>
