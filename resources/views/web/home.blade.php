@@ -49,7 +49,7 @@
                     <div class="col-xs-6 col-sm-4 col-md-4">
                         <div class="item">
                             <div class="project-thumb">
-                                <img src="{{$servico->cover()}}" alt="{{$servico->titulo}}" />
+                                <img style="max-height: 240px; min-height:240px" src="{{$servico->cover()}}" alt="{{$servico->titulo}}" />
                             </div>
                             <div class="project-hoverlay">
                                 <div class="project-text">

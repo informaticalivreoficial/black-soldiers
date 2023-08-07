@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\{
     CatPostController,
     ConfigController,
     EmpresaController,
+    MenuController,
     ParceiroController,
     SitemapController,
     SlideController
@@ -136,6 +137,16 @@ Route::prefix('admin')->middleware('auth')->group( function(){
     Route::match(['post', 'get'], 'email/enviar-email', [EmailController::class, 'send'])->name('email.send');
     Route::post('email/sendEmail', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
     Route::match(['post', 'get'], 'email/success', [EmailController::class, 'success'])->name('email.success');
+
+    //****************************** Menu *******************************************/
+    Route::get('menus/set-status', [MenuController::class, 'menuSetStatus'])->name('menus.menuSetStatus');
+    Route::delete('menus/deleteon', [MenuController::class, 'deleteon'])->name('menus.deleteon');
+    Route::get('menus/delete', [MenuController::class, 'delete'])->name('menus.delete');
+    Route::put('menus/{id}', [MenuController::class, 'update'])->name('menus.update');
+    Route::get('menus/{id}/edit', [MenuController::class, 'edit'])->name('menus.edit');
+    Route::get('menus/create', [MenuController::class, 'create'])->name('menus.create');
+    Route::post('menus/store', [MenuController::class, 'store'])->name('menus.store');
+    Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');
 
     //*********************** Usuários *******************************************/
     Route::match(['get', 'post'], 'usuarios/pesquisa', [UserController::class, 'search'])->name('users.search');

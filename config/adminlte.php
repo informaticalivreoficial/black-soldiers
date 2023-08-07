@@ -243,6 +243,11 @@ return [
             'icon' => 'fas fa-cog',
         ],
         [
+            'text' => 'Menu Site',
+            'url'  => 'admin/menus',
+            'icon' => 'fas fa-bars',
+        ],
+        [
             'text' => 'Usuários',            
             'icon' => 'fas fa-fw fa-users',
             'submenu' => [                

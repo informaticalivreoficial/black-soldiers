@@ -72,7 +72,7 @@
                             <span><a href="callto:{{$configuracoes->telefone3}}">{{$configuracoes->telefone3}}</a></span>
                           @endif
                           @if($configuracoes->whatsapp)
-                           <span><i class="fa fa-whatsapp"></i> <a target="_blank" href="{{getNumZap($configuracoes->whatsapp ,'Atendimento '.$configuracoes->nomedosite)}}">{{$configuracoes->whatsapp}}</a></span>
+                           <span><i class="fa fa-whatsapp"></i> <a target="_blank" class="sharezap" href="">{{$configuracoes->whatsapp}}</a></span>
                           @endif
                           
                           

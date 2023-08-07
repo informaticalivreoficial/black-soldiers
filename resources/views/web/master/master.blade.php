@@ -57,7 +57,7 @@
                                     <li><i class="fa fa-envelope-o"></i><a class="a-topbar" href="mailto:{{$configuracoes->email}}">{{$configuracoes->email}}</a></li>
                                     @endif
                                     @if ($configuracoes->whatsapp)
-                                    <li><i class="fa fa-whatsapp"></i><a class="a-topbar" target="_blank" href="{{getNumZap($configuracoes->whatsapp ,'Atendimento '.$configuracoes->nomedosite)}}">{{$configuracoes->whatsapp}}</a></li>                                       
+                                    <li><i class="fa fa-whatsapp"></i><a class="a-topbar sharezap" target="_blank" href="">{{$configuracoes->whatsapp}}</a></li>                                       
                                     @endif                                                                        
                                 </ul>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="col-md-3">
                                 <div class="logo">
                                     <a href="{{route('web.home')}}">
-                                        <img src="{{$configuracoes->getLogomarca()}}" alt="Black Soldiers Serviços" />
+                                        <img width="40%" src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}" />
                                     </a>
                                 </div>
                             </div>
@@ -104,7 +104,21 @@
                                     <nav id="main-menu" class="main-menu">
                                         <ul>
                                             <li class=""><a href="{{route('web.home')}}">Início</a></li>
-                                            <li class=""><a href="https://localhost/Black-Soldiers/public/pagina/quem-somos">Quem Somos</a></li>
+                                            @if (!empty($Links) && $Links->count())                            
+                                                @foreach($Links as $menuItem)                            
+                                                <li class="">
+                                                    <a {{($menuItem->target == 1 ? 'target=_blank' : '')}} 
+                                                        href="{{($menuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($menuItem->post != null ? $menuItem->PostObject->slug : '#') ]) : $menuItem->url)}}">{{ $menuItem->titulo }}{!!($menuItem->children && $menuItem->parent ? " <i class=\"fal fa-plus dropdown-icon\"></i>" : '')!!}</a>
+                                                    @if( $menuItem->children && $menuItem->parent)
+                                                    <ul>
+                                                        @foreach($menuItem->children as $subMenuItem)
+                                                            <li class=""><a {{($subMenuItem->target == 1 ? 'target=_blank' : '')}} href="{{($subMenuItem->tipo == 'Página' ? route('web.pagina', [ 'slug' => ($subMenuItem->post != null ? $subMenuItem->PostObject->slug : '#') ]) : $subMenuItem->url)}}">{{ $subMenuItem->titulo }}</a></li>                                        
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
+                                                </li>
+                                                @endforeach
+                                            @endif
                                             <li class=""><a href="{{route('web.servicos')}}">Serviços</a></li>
                                             <li><a href="javascript:void(0)">Atendimento<i class="fa fa-angle-down"></i></a>
                                                 <ul>
@@ -145,7 +159,7 @@
                     <div class="col-md-4 col-sm-12" style="margin-bottom: 20px;">
                         <div class="footer-wedget-one">
                             <a href="index.html">
-                                <img src="{{$configuracoes->getLogomarca()}}" alt="Black Soldiers Serviços" />
+                                <img width="40%" src="{{$configuracoes->getLogomarca()}}" alt="{{$configuracoes->nomedosite}}" />
                             </a>
                             <p>{{$configuracoes->descricao}}</p>
                             <div class="footer-social-profile">
@@ -288,7 +302,7 @@
     </footer>
 
     <div class="whatsapp-footer">
-        <a target="_blank" href="{{getNumZap($configuracoes->whatsapp ,'Atendimento '. $configuracoes->nomedosite)}}" title="WhatsApp">
+        <a target="_blank" href="" title="WhatsApp" class="sharezap">
             <img src="{{url(asset('frontend/assets/images/zap-topo.png'))}}" alt="{{url(asset('frontend/assets/images/zap-topo.png'))}}" title="WhatsApp" />
         </a>
     </div>
@@ -312,6 +326,38 @@
     @hasSection('js')
         @yield('js')
     @endif
+
+    <script>
+        $(document).ready(function() {
+            var isMobile = {
+                Android: function() {
+                    return navigator.userAgent.match(/Android/i);
+                },
+                BlackBerry: function() {
+                    return navigator.userAgent.match(/BlackBerry/i);
+                },
+                iOS: function() {
+                    return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                },
+                Opera: function() {
+                    return navigator.userAgent.match(/Opera Mini/i);
+                },
+                Windows: function() {
+                    return navigator.userAgent.match(/IEMobile/i);
+                },
+                any: function() {
+                    return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                }
+            };
+            if( isMobile.any() ) {
+                $('.sharezap').attr("href", "https://api.whatsapp.com/send?l=pt_pt&phone="+{{ \App\Helpers\Renato::limpatelefone($configuracoes->whatsapp) }}+"&text=Atendimento");
+                return true; // está utilizando celular
+            }else{
+                $('.sharezap').attr("href", "https://web.whatsapp.com/send?l=pt_pt&phone="+{{ \App\Helpers\Renato::limpatelefone($configuracoes->whatsapp) }}+"&text=Atendimento");
+                return false; // não é celular
+            }
+        });
+    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B50RN49YVK"></script>
